@@ -3,7 +3,7 @@
 
 public class Token {
 	int val;
-	TokenType t;
+	TokenType type;
 	
 	public Token (){
 		int val;

@@ -1,5 +1,4 @@
 
-
 public enum TokenType {
 	DIGIT, IDENTIFIER, EXPRESION, TERM, FACTOR;
 }
