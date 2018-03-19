@@ -13,16 +13,19 @@ public class Main {
 		System.out.println("Insert 'END' to exit.");
 		do {
 			str =  read.nextLine();
+			System.out.println(str); // Priniting the user's input
 			if (str=="END") System.exit(0);;
 			Lexer lexer = new Lexer (str);
 			lexer.printList();
 			// presenting tokens...
 			System.out.println("---------------------");
 			// Start parser using:
+			Parser parser = new Parser();
+			parser.Line(lexer.list);
 			//Parser pareser = new Parser (list);
 			
 			System.out.println("To continue, Insert new command, 'END' to exit");
-		} while (str!="END");
+		} while (!str.equals("END"));
 		
 		
 		System.out.println("");
