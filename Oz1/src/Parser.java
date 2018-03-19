@@ -1,5 +1,4 @@
 import java.util.LinkedList;
-import java.util.ArrayList;
 
 //Parser checking line intactness, calculate the score and print it, or assign into varaible
 
@@ -11,28 +10,34 @@ public class Parser {
 
 	public Parser (LinkedList <Token> list){
 		System.out.println(Parser.symbols[0]);
+		int a = 0, b=0, c=0;
 		this.str = str;
 		this.isValid = false;
-		Token t = list.getFirst();
-		while (t!=null) {
-			if (t.type==TokenType.IDENTIFIER) {
-				assignLine(list);
-			}
-			
-			else if (t.type==TokenType.DIGIT) {
-				calculationLine(list);
-			}
+		list.add(new Token (str.charAt(i)));
+		
+
+		if (list.get(0).type==TokenType.IDENTIFIER) {
+			assignLine(list);
+		}
+
+		else if (list.get(0).type==TokenType.DIGIT) {
+			calculationLine(list);
 		}	
 	}
-	
+
 	// If its an assign command, return TRUE if succeed
 	protected boolean assignLine(LinkedList <Token> list) {
 		return isValid;
-		
+
 	}
-	
+
 	// If its an calculation command, return TRUE if succeed
 	protected boolean calculationLine(LinkedList <Token> list) {
+
 		return isValid;
+	}
+	
+	protected int exp(LinkedList <Token> list) {
+		return null;
 	}
 }
