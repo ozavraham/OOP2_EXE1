@@ -25,4 +25,8 @@ public class Token {
 	char get_val() {
 		return this.tav;
 	}
+	
+	public String toString() {
+		return this.tav + " " + this.type;
+	}
 }

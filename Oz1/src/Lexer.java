@@ -9,7 +9,9 @@ public class Lexer {
 	public Lexer (String str){
 		char tav;
 		for(int i = 0; i < str.length(); i++) {
+			
 			tav = str.charAt(i);
+			
 			if (tav >= 'a' && tav <= 'z') {
 				this.list.add(new Token(tav, TokenType.IDENTIFIER));
 			}
@@ -25,6 +27,14 @@ public class Lexer {
 			if (tav == ';'){
 				this.list.add(new Token(tav, TokenType.END_OF_LINE));
 			}
+		}
+		
+	}
+	
+	void printList() {
+		for( int i = 0; i < this.list.size() ; i++) {
+			System.out.println(list.get(i));
+			System.out.println();
 		}
 	}
 }
