@@ -15,7 +15,7 @@ public class Lexer {
 			if (tav >= 'a' && tav <= 'z') {
 				this.list.add(new Token(tav, TokenType.IDENTIFIER));
 			}
-			if (tav >= 0 && tav < 10) {
+			if (tav >= '0' && tav < '10') {
 				this.list.add(new Token(tav, TokenType.INTEGER));
 			}
 			if (tav == '+' || tav == '-' || tav == '*' || tav == '/' || tav == '='){
