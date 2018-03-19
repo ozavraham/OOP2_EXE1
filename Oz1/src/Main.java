@@ -9,20 +9,22 @@ public class Main {
 		Scanner read = new Scanner (System.in);
 		String str;
 		System.out.println("Welcome!");
+		System.out.println("Insert command to execute:");
+		System.out.println("Insert 'END' to exit.");
 		do {
-			System.out.println("Insert new command to execute:");
-			System.out.println("Insert 'END' to exit.");
 			str =  read.nextLine();
 			if (str=="END") System.exit(0);;
 			Lexer lexer = new Lexer (str);
+			lexer.print();
 			// presenting tokens...
-			TokenType.
-			list = lexer.getList();
-			Parser pareser = new Parser (list);
+			System.out.println("---------------------");
+			// Start parser using:
+			//Parser pareser = new Parser (list);
+			
+			System.out.println("To continue, Insert new command, 'END' to exit");
 		} while (str!="END");
 		
 		
-		System.out.println("");
 		System.out.println("");
 		
 		

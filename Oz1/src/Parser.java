@@ -13,8 +13,6 @@ public class Parser {
 		int a = 0, b=0, c=0;
 		this.str = str;
 		this.isValid = false;
-		list.add(new Token (str.charAt(i)));
-		
 
 		if (list.get(0).type==TokenType.IDENTIFIER) {
 			assignLine(list);
