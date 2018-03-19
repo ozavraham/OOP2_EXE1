@@ -15,7 +15,7 @@ public class Main {
 			str =  read.nextLine();
 			if (str=="END") System.exit(0);;
 			Lexer lexer = new Lexer (str);
-			lexer.printLine();
+			lexer.printList();
 			// presenting tokens...
 			System.out.println("---------------------");
 			// Start parser using:
