@@ -21,7 +21,7 @@ public class Parser {
 
 	// Whole line
 	// Need to change to return int!
-	// FNDSKLFNKLDSNFLKDSNFLKDS
+	// FNDSKLFNKLDSNFLKDSNגדשגדשגדשFLKDS
 	protected void Line(LinkedList <Token> list) {
 		int a;
 		for (int i=0; i<list.size() ; i++) {
