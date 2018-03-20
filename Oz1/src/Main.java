@@ -18,12 +18,11 @@ public class Main {
 			System.out.println("Your input: " + str); // Priniting the user's input
 			list = lexer.tokenDivide(str);
 			// presenting tokens...
-			System.out.println("Token divide:");
+			System.out.print("Token divide:");
 			lexer.printList();
-			System.out.println("---------------------");
 			// Start parser using:
 			parser.Line(list);
-			parser.showSavedValues();
+			//parser.showSavedValues();
 			System.out.println("To continue, Insert new command, 'END' to exit");
 			str =  read.nextLine();
 		}
