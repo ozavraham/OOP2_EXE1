@@ -4,12 +4,17 @@ import java.util.List;
 //Parser checking line intactness, calculate the score and print it, or assign into varaible
 
 public class Parser {
+	private Lexer lexer;
+	public int arr[];
 	
 	public Parser (){
-		
+		//this.lexer = lexer;
+		this.arr = new int[26];
 	}
-
+	
+	// Whole line
 	protected void Line(LinkedList <Token> list) {
+		int a;
 		for (int i=0; i<list.size() ; i++) {
 			Token t = list.get(i);
 			if (t.get_type()==TokenType.INTEGER) {
@@ -17,20 +22,32 @@ public class Parser {
 				i = i+2;
 			}
 			else if (t.get_type()==TokenType.IDENTIFIER) {
-				t = list.get(i+1); // Next token
+				char tav = t.get_val();
+				i++;
+				t = list.get(i); // Next token
 				if (t.get_val()=='=') {
-					t = list.get(i+1); // Next token	
-					Expression((LinkedList<Token>)list.subList(i+1, list.size()-1));
+					i++;
+					t = list.get(i); // Next token	
+					if (t.get_type()==TokenType.INTEGER) {
+						a = t.get_val()-'0';
+						this.arr[tav-'a'] = t.get_val()-'0';
+						System.out.println(tav + "=" + a + "; Has been excuted.");
+					}
+					else {
+						Expression(list.subList(i+1, list.size()-1));
+					}
 				}
-				else Expression((LinkedList<Token>)list.subList(i+1, list.size()-1));
+				else Expression(list.subList(i+1, list.size()-1));
 			}
 			if (t.get_val()==';') {
-				t= list.get(i+1); // Next token
+				i = list.size();
 			}
+			
 		}
 	}
-
-	protected int Expression(LinkedList <Token> list){
+	
+	// If needed calculation
+	protected int Expression(List <Token> list){
 		int i=0;
 		int b = 0;
 		int a = list.get(i).get_val()-'0';
@@ -43,7 +60,8 @@ public class Parser {
 		}
 		return b;
 	}
-
+	
+	// +\- Calculation
 	protected int Term(List<Token> list) {
 		int i=0;
 		int a = list.get(i).get_val()-'0'; 
@@ -52,12 +70,21 @@ public class Parser {
 		else return a-b;
 	}
 	
+	// */ Calculation
 	protected int Factor(List<Token> list) {
 		int i=0;
 		int a = list.get(i).get_val()-'0'; 
 		int b = list.get(i+2).get_val()-'0';
 		if (list.get(i+1).get_val()=='*') return a*b;
 		else return (a/b);
+	}
+	
+	public void showSavedValues() {
+		for (int i=0; i<this.arr.length ; i++) {
+			char c = (char) (i+'a');
+			System.out.print(c + ": " + this.arr[i] + " | ");
+		}
+		System.out.println();
 	}
 	
 }

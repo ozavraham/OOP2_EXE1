@@ -11,26 +11,23 @@ public class Main {
 		System.out.println("Welcome!");
 		System.out.println("Insert command to execute:");
 		System.out.println("Insert 'END' to exit.");
-		do {
-			str =  read.nextLine();
-			System.out.println(str); // Priniting the user's input
-			if (str=="END") System.exit(0);;
-			Lexer lexer = new Lexer (str);
-			lexer.printList();
+		str =  read.nextLine();
+		Lexer lexer = new Lexer ();
+		Parser parser = new Parser();
+		while (!str.equals("END")) {
+			System.out.println("Your input: " + str); // Priniting the user's input
+			list = lexer.tokenDivide(str);
 			// presenting tokens...
+			System.out.println("Token divide:");
+			lexer.printList();
 			System.out.println("---------------------");
 			// Start parser using:
-			Parser parser = new Parser();
-			parser.Line(lexer.list);
-			//Parser pareser = new Parser (list);
-			
+			parser.Line(list);
+			parser.showSavedValues();
 			System.out.println("To continue, Insert new command, 'END' to exit");
-		} while (!str.equals("END"));
-		
-		
-		System.out.println("");
-		
-		
+			str =  read.nextLine();
+		}
+		System.out.println("Goodbye...");
 
 	}
 
