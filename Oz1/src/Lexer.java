@@ -5,55 +5,65 @@ import java.util.LinkedList;
 // function get_token gives the next token as string 
 
 public class Lexer {
-	 LinkedList <Token> list;
-
-	public Lexer (){
-		this.list = new LinkedList();
-		/*
-		 * Ah sheli!
-		 * it will be easier if before you read the string you will remove all of the spaces!
-		 * Example:
-		 * If the input is a = 3;
-		 * then use trim() to turn it to a=3; (which is easeir to divide)
-		 * String str = "a = 3;"
-		 * String newStr = str.trim();
-		 * newStr = "a=3;"
-		 * will make it easier to us to ignore all the spaces
-		 * :):):):):)
-		 */
-	}
-
-	LinkedList <Token> tokenDivide(String str) {
-		this.list = new LinkedList();
-		char tav;
+	
+	LinkedList <Token> list = new LinkedList<Token>(); 
+	
+	public Lexer (String str){
+		
+		char token;
+		
 		for(int i = 0; i < str.length(); i++) {
-
-			tav = str.charAt(i);
-
-			if (tav >= 'a' && tav <= 'z') {
-				this.list.add(new Token(tav, TokenType.IDENTIFIER));
+			
+			token = str.charAt(i);
+			
+			if (token >= 'a' && token <= 'z') {
+				this.list.add(new Token(token, TokenType.IDENTIFIER));
 			}
-			if (tav >= '0' && tav <= '9') {
-				this.list.add(new Token(tav, TokenType.INTEGER));
+			if (token >= '0' && token <= '9') {
+				this.list.add(new Token(token, TokenType.INTEGER));
 			}
-			if (tav == '+' || tav == '-' || tav == '*' || tav == '/' || tav == '='){
-				this.list.add(new Token(tav, TokenType.OPERNAD));
+			if (token == '+' || token == '-' || token == '*' || token == '/' ||token == '='){
+				this.list.add(new Token(token, TokenType.OPERNAD));
 			}
-			if ( tav == '(' || tav == ')') {
-				this.list.add(new Token(tav, TokenType.BRACKET));
+			if (token == '(' || token == ')') {
+				this.list.add(new Token(token, TokenType.BRACKET));
 			}
-			if (tav == ';'){
-				this.list.add(new Token(tav, TokenType.END_OF_LINE));
+			if (token == ';'){
+				this.list.add(new Token(token, TokenType.END_OF_LINE));
 			}
 		}
-		return list;
-
+		
 	}
-
+	
+	boolean checkSyntax(LinkedList<Token> list) {
+		
+		Object[] TokensArray = list.toArray(new Object[list.size()]);
+		
+		int countBreakets = 0;
+		
+		for(int i = 0; i < list.size(); i++){
+			
+			if(TokensArray[i].equals('(') || TokensArray[i].equals(')')){
+				countBreakets++;
+				if(countBreakets%2 != 0)
+					return false;
+			}
+			if(TokensArray[i].equals(TokenType.INTEGER) && TokensArray[i+1].equals(TokenType.IDENTIFIER))//checks if 2a 
+				return false;
+			if(TokensArray[i].equals(TokenType.IDENTIFIER) && TokensArray[i+1].equals(TokenType.INTEGER))//checks if a2
+				return false;
+			if(!(TokensArray[TokensArray.length-1].equals(TokenType.END_OF_LINE)))//checks if sentence end with -> ; 
+				return false;
+			if(TokensArray[i].equals(TokenType.OPERNAD) && TokensArray[i+1].equals(TokenType.OPERNAD))//checks if there are double operations
+				return false;
+			}
+		return true;
+	}
+	
 	void printList() {
 		for( int i = 0; i < this.list.size() ; i++) {
-			System.out.print("| " + list.get(i));
+			System.out.println(list.get(i));
+			System.out.println();
 		}
-		System.out.println();
 	}
 }
