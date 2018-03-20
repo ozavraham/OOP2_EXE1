@@ -11,19 +11,22 @@ import java.util.List;
 public class Parser {
 	private Lexer lexer;
 	public int arr[];
+	static private int index;
 
 	public Parser (){
 		//this.lexer = lexer;
 		this.arr = new int[26];
+		this.index = 0;
 	}
 
 	// Whole line
+	// Need to change to return int!
 	protected void Line(LinkedList <Token> list) {
 		int a;
 		for (int i=0; i<list.size() ; i++) {
 			Token t = list.get(i);
 			if (t.get_type()==TokenType.INTEGER) {
-				System.out.println("Result: " + Expression(list)); // Getting here twice becuase of the previous line condition.
+				System.out.println("Result: " + Expression(list,i)); // Getting here twice becuase of the previous line condition.
 				i = i+2;
 			}
 			else if (t.get_type()==TokenType.IDENTIFIER) {
@@ -39,14 +42,14 @@ public class Parser {
 						System.out.println(tav + "=" + a + "; Has been excuted.");
 					}
 					else {
-						int temp = Expression(list.subList(i, list.size()-1));
+						int temp = Expression(list, i);
 						System.out.println(temp);
 						a = t.get_val()-'0';
 						this.arr[tav-'a'] = temp;
 						System.out.println(tav + "=" + temp + "; Has been excuted.");
 					}
 				}
-				else Expression(list.subList(i+1, list.size()-1));
+				else Expression(list, i);
 			}
 			if (t.get_val()==';') {
 				i = list.size();
@@ -54,35 +57,24 @@ public class Parser {
 			
 			// If its an expression inside Brackets
 			if (t.type==TokenType.BRACKET) {
-				for (int j=i ; j<list.size() ; j++) {
-					if (list.get(j).type==TokenType.BRACKET) {
-						List l = list.subList(i, j);
-						System.out.println(Expression(l) + Expression(list.subList(j+1, list.size())));
-					}
-				}
+				System.out.println(Expression(list,i+1));
 			}
-
 		}
 	}
 
 	// If needed calculation
-	protected int Expression(List <Token> list){
-		int i=0;
-		int b = 0;
+	protected int Expression(List <Token> list, int i){
 		int a = list.get(i).get_val()-'0';
-		i++;
-		if (list.get(i).get_val()=='+' || list.get(i).get_val()=='-') {
-			b = Term(list.subList(i-1, i+2));
+		if (list.get(i+1).get_val()=='+' || list.get(i+1).get_val()=='-') {
+			return Term(list, i);
 		}
-		else if (list.get(i).get_val()=='*' || list.get(i).get_val()=='/'){
-			b = Factor(list.subList(i-1, i+2));
+		else {
+			return Factor(list,i);
 		}
-		return b;
 	}
 
 	// +\- Calculation
-	protected int Term(List<Token> list) {
-		int i=0;
+	protected int Term(List<Token> list, int i) {
 		int a = list.get(i).get_val()-'0'; 
 		int b = list.get(i+2).get_val()-'0';
 		if (list.get(i+1).get_val()=='+') return a+b;
@@ -90,8 +82,7 @@ public class Parser {
 	}
 
 	// */ Calculation
-	protected int Factor(List<Token> list) {
-		int i=0;
+	protected int Factor(List<Token> list, int i) {
 		int a = list.get(i).get_val()-'0'; 
 		int b = list.get(i+2).get_val()-'0';
 		if (list.get(i+1).get_val()=='*') return a*b;
@@ -105,5 +96,4 @@ public class Parser {
 		}
 		System.out.println();
 	}
-
 }
