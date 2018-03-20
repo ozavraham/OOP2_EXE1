@@ -12,7 +12,7 @@ public class Main {
 		System.out.println("Insert command to execute:");
 		System.out.println("Insert 'END' to exit.");
 		str =  read.nextLine();
-		Lexer lexer = new Lexer ();
+		Lexer lexer = new Lexer();
 		Parser parser = new Parser();
 		while (!str.equals("END")) {
 			System.out.println("Your input: " + str); // Priniting the user's input
