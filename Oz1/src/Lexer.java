@@ -1,4 +1,3 @@
-import java.util.*;
 import java.util.LinkedList;
 
 // Lexer divides input into tokens
