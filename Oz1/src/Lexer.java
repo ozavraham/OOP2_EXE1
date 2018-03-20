@@ -6,10 +6,15 @@ import java.util.LinkedList;
 
 public class Lexer {
 	
-	LinkedList <Token> list = new LinkedList<Token>(); 
+	LinkedList <Token> list;  
 	
-	public Lexer (String str){
+	public Lexer (){
+		this.list = new LinkedList<Token>();
+	}
+	
+	LinkedList <Token> tokenDivide(String str){
 		
+		this.list = new LinkedList<Token>();
 		char token;
 		
 		for(int i = 0; i < str.length(); i++) {
@@ -32,6 +37,7 @@ public class Lexer {
 				this.list.add(new Token(token, TokenType.END_OF_LINE));
 			}
 		}
+		return list;
 		
 	}
 	
@@ -67,3 +73,4 @@ public class Lexer {
 		}
 	}
 }
+
