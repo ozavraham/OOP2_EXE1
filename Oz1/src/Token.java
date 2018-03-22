@@ -1,32 +1,41 @@
-public class Token {
-	char tav;
-	TokenType type;
+public class Token 
+	{
+	private int tokenIndex;
+	private String value;
+	private TokenType type;
 	
-	public Token (){
+	public Token (TokenType type)
+	{
+		this.value = null;
+		this.type = type;
 	}
 	
-	public Token (char tav, TokenType t) {
-		this.tav = tav;
-		this.type = t;
+	public Token (String value, TokenType type)
+	{   
+		this.value = value;
+		this.type = type;
 	}
 	
-	Token get_token(){
-		return this;
+	public void setValue(String val) {
+		this.value = val;
 	}
 	
-	void setType(TokenType t) {
-		this.type = t;
+	public int getIndex() 
+	{
+		return this.tokenIndex;
+	}
+	public String getValue()
+	{
+		return this.value;
 	}
 	
-	TokenType get_type() {
+	public TokenType getType() 
+	{
 		return this.type;
 	}
 	
-	char get_val() {
-		return this.tav;
-	}
-	
-	public String toString() {
-		return this.tav + " " + this.type;
+	public String toString() 
+	{
+		return this.value + " " + this.type;
 	}
 }

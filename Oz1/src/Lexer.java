@@ -1,75 +1,104 @@
-import java.util.LinkedList;
+import java.util.*;
 
-// Lexer divides input into tokens
-// function get_token gives the next token as string 
+public class Lexer 
+{
+	
+	List <Token> tokensList;
+	static int index;
+	
+	public Lexer() {
+		this.index = 0;
+	}
+	
+	public List <Token> tokenize(String source) {
 
-public class Lexer {
-	
-	LinkedList <Token> list;  
-	
-	public Lexer (){
-		this.list = new LinkedList<Token>();
-	}
-	
-	LinkedList <Token> tokenDivide(String str){
-		
-		this.list = new LinkedList<Token>();
-		char token;
-		
-		for(int i = 0; i < str.length(); i++) {
-			
-			token = str.charAt(i);
-			
-			if (token >= 'a' && token <= 'z') {
-				this.list.add(new Token(token, TokenType.IDENTIFIER));
+		StringBuffer currentToken = new StringBuffer();
+		tokensList = new ArrayList<Token>();
+		Token token = null;
+		for(int i = 0; i < source.length(); i++)
+		{
+			String sub = source.substring(i ,i+1);
+			if(sub.matches("[0-9.a-z]")) {
+				currentToken.append(sub);
+				continue; 
 			}
-			if (token >= '0' && token <= '9') {
-				this.list.add(new Token(token, TokenType.INTEGER));
+			else if (currentToken.length() > 0) {
+				String lexeme = currentToken.toString();
+				if (lexeme.matches("[0-9]+|[0-9]+\\.[0-9]+|[0-9]+[eE][0-9]+")) {
+					tokensList.add(new Token(lexeme, TokenType.INTEGER));
+				} 
+				else if (lexeme.matches("[A-Za-z_]+[0-9]*")) {
+					tokensList.add(new Token(lexeme, TokenType.IDENTIFIER));
+				}
+				currentToken = new StringBuffer();
 			}
-			if (token == '+' || token == '-' || token == '*' || token == '/' ||token == '='){
-				this.list.add(new Token(token, TokenType.OPERNAD));
+			char chr = source.charAt(i);
+			switch (chr) 
+			{
+			case '+':
+				token = new Token(TokenType.OPERNAD);
+				token.setValue(Character.toString(chr));
+				break;
+			case '-':
+				token = new Token(TokenType.OPERNAD);
+				token.setValue(Character.toString(chr));
+				break;
+			case '*':
+				token = new Token(TokenType.OPERNAD);
+				token.setValue(Character.toString(chr));
+				break;
+			case '/':
+				token = new Token(TokenType.OPERNAD);
+				token.setValue(Character.toString(chr));
+				break;
+			case '=':
+				token = new Token(TokenType.OPERNAD);
+				token.setValue(Character.toString(chr));
+				break;
+			case '(':
+				if (token != null && token.getType() == TokenType.IDENTIFIER) {
+					tokensList.remove(tokensList.size() - 1);
+					token = new Token(token.getValue(), TokenType.FUNCTION);
+				} 
+				else {
+					token = new Token(TokenType.OPEN_BREAKETS);
+					token.setValue(Character.toString(chr));
+				}
+				break;
+			case ')':
+				token = new Token(TokenType.CLOSE_BREAKETS);
+				token.setValue(Character.toString(chr));
+				break;
+			case ';':
+				token = new Token(TokenType.END_OF_LINE);
+				token.setValue(Character.toString(chr));
+				break;
+			case ' ':
+				continue;
+			default:
+				System.out.println(sub + "is an unknowen token");
 			}
-			if (token == '(' || token == ')') {
-				this.list.add(new Token(token, TokenType.BRACKET));
-			}
-			if (token == ';'){
-				this.list.add(new Token(token, TokenType.END_OF_LINE));
-			}
+			tokensList.add(token);
 		}
-		return list;
-		
+		return tokensList;
+
 	}
-	
-	boolean checkSyntax(LinkedList<Token> list) {
-		
-		Object[] TokensArray = list.toArray(new Object[list.size()]);
-		
-		int countBreakets = 0;
-		
-		for(int i = 0; i < list.size(); i++){
-			
-			if(TokensArray[i].equals('(') || TokensArray[i].equals(')')){
-				countBreakets++;
-				if(countBreakets%2 != 0)
-					return false;
-			}
-			if(TokensArray[i].equals(TokenType.INTEGER) && TokensArray[i+1].equals(TokenType.IDENTIFIER))//checks if 2a 
-				return false;
-			if(TokensArray[i].equals(TokenType.IDENTIFIER) && TokensArray[i+1].equals(TokenType.INTEGER))//checks if a2
-				return false;
-			if(!(TokensArray[TokensArray.length-1].equals(TokenType.END_OF_LINE)))//checks if sentence end with -> ; 
-				return false;
-			if(TokensArray[i].equals(TokenType.OPERNAD) && TokensArray[i+1].equals(TokenType.OPERNAD))//checks if there are double operations
-				return false;
-			}
-		return true;
-	}
-	
-	void printList() {
-		for( int i = 0; i < this.list.size() ; i++) {
-			System.out.println(list.get(i));
-			System.out.println();
+
+	public void printList() 
+	{
+		System.out.print("[");
+		for(int i = 0; i < tokensList.size(); i++)
+		{
+			System.out.print(tokensList.get(i) + " | ");
 		}
+		System.out.println("]");
+	}
+
+	Token get_Token() {
+		//Thread.dumpStack();
+		Token token = this.tokensList.get(index);
+		index++;
+		return token;
+
 	}
 }
-

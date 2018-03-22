@@ -9,81 +9,126 @@ import java.util.List;
  * 
  */
 public class Parser {
-	private Lexer lexer;
 	public int arr[];
-	static private int index;
+	private Token token;
+	private Lexer lexer;
 
 	public Parser (){
-		//this.lexer = lexer;
 		this.arr = new int[26];
-		Parser.index = 0;
 	}
 
 	// Whole line
-	// Need to change to return int!
-	protected void Line(LinkedList <Token> list) {
-		int a;
-		for (Parser.index=0; index<list.size() ; index++) {
-			Token t = list.get(index);
-			if (t.get_type()==TokenType.INTEGER) {
-				System.out.println("Result: " + Expression(list,index)); // Getting here twice becuase of the previous line condition.
-				index = index+2;
+	protected void Line(Lexer lexer) {
+		this.lexer = lexer;
+		token = lexer.get_Token();
+		while (token!=null) {
+			if (token.getType()==TokenType.INTEGER) {
+				System.out.println("Result: " + Expression()); 
+				break;
 			}
-			else if (t.get_type()==TokenType.IDENTIFIER) {
-				char tav = t.get_val();
-				index++;
-				t = list.get(index); // Next token
-				if (t.get_val()=='=') {
-					index++;
-					t = list.get(index); // Next token	
-					if (t.get_type()==TokenType.INTEGER && list.get(index+1).type!=TokenType.OPERNAD) {
-						a = t.get_val()-'0';
-						this.arr[tav-'a'] = t.get_val()-'0';
+			else if (token.getType()==TokenType.IDENTIFIER) {
+				String tav = token.getValue();
+				token = lexer.get_Token(); 
+				if (token.getValue().equals("=")) {
+					token = lexer.get_Token(); 	
+					if (token.getType()==TokenType.INTEGER && lexer.tokensList.get(lexer.index+1).getType()!=TokenType.OPERNAD) {
+						int a = Integer.parseInt(token.getValue());
+						this.arr[tav.charAt(0)] = a;
 						System.out.println(tav + "=" + a + "; Has been excuted.");
+						break;
 					}
 					else {
-						int temp = Expression(list, index);
+						int temp = Expression();
 						System.out.println(temp);
-						a = t.get_val()-'0';
-						this.arr[tav-'a'] = temp;
+						int a = Integer.parseInt(token.getValue());
+						this.arr[tav.charAt(0)] = temp;
 						System.out.println(tav + "=" + temp + "; Has been excuted.");
+						break;
 					}
 				}
-				else Expression(list, index);
+				else Expression();
 			}
-			if (t.get_val()==';') {
-				index = list.size()-1;
+			if (token.getValue().equals(";")) {
+				break;
 			}
 		}
 	}
 
-	// If needed calculation
-	protected int Expression(List <Token> list, int index){
-		if (list.get(index).get_type()==TokenType.BRACKET) return 0;
-		if (list.get(index+1).get_val()=='+' || list.get(index+1).get_val()=='-') {
-			return Term(list, index);
+	protected int Expression(){
+		int val = Integer.parseInt(token.getValue());
+		token = lexer.get_Token();
+		if (token.getValue().equals("+") || token.getValue().equals("-")) {
+			if (token.getValue().equals("+")) {
+				token = lexer.get_Token();
+				val += Term();
+			}
+			else {
+				token = lexer.get_Token();
+				val -= Term();
+			}
 		}
 		else {
-			return Factor(list,index);
+			val = Term();
 		}
+		return val;
 	}
 
-	// +\- Calculation
-	protected int Term(List<Token> list, int index) {
-		int a = list.get(index).get_val()-'0'; 
-		int b = list.get(index+2).get_val()-'0';
-		Parser.index = index+2;
-		if (list.get(index+1).get_val()=='+') return a+b;
-		else return a-b;
+
+	protected int Term() {
+		int val = Factor();
+		//t= lexer.get_Token();
+		if (token.getValue().equals("*") || token.getValue().equals("/")){
+			if (token.getValue().equals("*")) {
+				token = lexer.get_Token();
+				val *= Factor();
+			}
+			else {
+				token = lexer.get_Token();
+				val /= Factor();
+			}
+		}
+		return val;
 	}
 
-	// */ Calculation
-	protected int Factor(List<Token> list, int index) {
-		int a = list.get(index).get_val()-'0'; 
-		int b = list.get(index+2).get_val()-'0';
-		Parser.index = index+2;
-		if (list.get(index+1).get_val()=='*') return a*b;
-		else return (a/b);
+	protected int Factor() {
+		int val = 0;
+
+		if (token.getType()==TokenType.INTEGER || token.getType()==TokenType.IDENTIFIER) {
+			if (token.getType() == TokenType.INTEGER) {
+				val = Integer.parseInt(token.getValue());
+			}
+			else {
+				val = this.arr[token.getValue().charAt(0)];
+			}
+			token = lexer.get_Token();
+		}
+
+		if (token.getValue().equals("-")) {
+			token = lexer.get_Token();
+			if (token.getType() == TokenType.END_OF_LINE) 
+				throw new IllegalArgumentException("Token ';' canno't come after -!");
+		}
+		if (token.getType() == TokenType.OPEN_BREAKETS) {
+			token = lexer.get_Token();
+			val -= Expression();
+			val += Expression();
+		}
+		else if (token.getType() == TokenType.INTEGER) {
+			val = Integer.parseInt(token.getValue());
+			token = lexer.get_Token();
+		}
+		else if (token.getType() == TokenType.IDENTIFIER) {
+			val = this.arr[Integer.parseInt(token.getValue())];
+			token = lexer.get_Token();
+		}
+		else if (token.getValue().equals("(")) {
+			token = lexer.get_Token();
+			val = Expression();
+		}
+		if (token.getValue().equals(")")) {
+			token = lexer.get_Token();
+		}
+		return val;
 	}
 
 	public void showSavedValues() {

@@ -1,6 +1,13 @@
 
-public enum TokenType {
-	INTEGER, IDENTIFIER, BRACKET, OPERNAD, END_OF_LINE;
+public enum TokenType
+{
+	INTEGER,
+	IDENTIFIER, 
+	OPEN_BREAKETS, 
+	CLOSE_BREAKETS,
+	OPERNAD,
+	FUNCTION,
+	END_OF_LINE
 }
 
 /*
