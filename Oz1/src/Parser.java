@@ -28,20 +28,19 @@ public class Parser {
 			}
 			else if (token.getType()==TokenType.IDENTIFIER) {
 				String tav = token.getValue();
+				System.out.println(tav);
 				token = lexer.get_Token(); 
 				if (token.getValue().equals("=")) {
 					token = lexer.get_Token(); 	
-					if (token.getType()==TokenType.INTEGER && lexer.tokensList.get(lexer.index+1).getType()!=TokenType.OPERNAD) {
+					if (token.getType()==TokenType.INTEGER && lexer.tokensList.get(lexer.index).getType()!=TokenType.OPERNAD) {
 						int a = Integer.parseInt(token.getValue());
-						this.arr[tav.charAt(0)] = a;
+						this.arr[tav.charAt(0)-'a'] = a;
 						System.out.println(tav + "=" + a + "; Has been excuted.");
 						break;
 					}
 					else {
 						int temp = Expression();
-						System.out.println(temp);
-						int a = Integer.parseInt(token.getValue());
-						this.arr[tav.charAt(0)] = temp;
+						this.arr[tav.charAt(0)-'a'] = temp;
 						System.out.println(tav + "=" + temp + "; Has been excuted.");
 						break;
 					}
@@ -51,12 +50,16 @@ public class Parser {
 			if (token.getValue().equals(";")) {
 				break;
 			}
+			token = lexer.get_Token();
 		}
 	}
 
 	protected int Expression(){
-		int val = Integer.parseInt(token.getValue());
-		token = lexer.get_Token();
+		int val;
+//			val = Integer.parseInt(token.getValue());
+		val = Term();
+//		token = lexer.get_Token();
+		System.out.println(token.getValue());
 		if (token.getValue().equals("+") || token.getValue().equals("-")) {
 			if (token.getValue().equals("+")) {
 				token = lexer.get_Token();
@@ -67,16 +70,12 @@ public class Parser {
 				val -= Term();
 			}
 		}
-		else {
-			val = Term();
-		}
 		return val;
 	}
 
 
 	protected int Term() {
 		int val = Factor();
-		//t= lexer.get_Token();
 		if (token.getValue().equals("*") || token.getValue().equals("/")){
 			if (token.getValue().equals("*")) {
 				token = lexer.get_Token();
@@ -92,7 +91,6 @@ public class Parser {
 
 	protected int Factor() {
 		int val = 0;
-
 		if (token.getType()==TokenType.INTEGER || token.getType()==TokenType.IDENTIFIER) {
 			if (token.getType() == TokenType.INTEGER) {
 				val = Integer.parseInt(token.getValue());
@@ -110,11 +108,10 @@ public class Parser {
 		}
 		if (token.getType() == TokenType.OPEN_BREAKETS) {
 			token = lexer.get_Token();
-			val -= Expression();
 			val += Expression();
 		}
 		else if (token.getType() == TokenType.INTEGER) {
-			val = Integer.parseInt(token.getValue());
+			val -= Integer.parseInt(token.getValue());
 			token = lexer.get_Token();
 		}
 		else if (token.getType() == TokenType.IDENTIFIER) {
