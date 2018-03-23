@@ -56,9 +56,9 @@ public class Parser {
 
 	protected int Expression(){
 		int val;
-//			val = Integer.parseInt(token.getValue());
+		//			val = Integer.parseInt(token.getValue());
 		val = Term();
-//		token = lexer.get_Token();
+		//		token = lexer.get_Token();
 		System.out.println(token.getValue());
 		if (token.getValue().equals("+") || token.getValue().equals("-")) {
 			if (token.getValue().equals("+")) {
@@ -103,27 +103,29 @@ public class Parser {
 
 		if (token.getValue().equals("-")) {
 			token = lexer.get_Token();
-			if (token.getType() == TokenType.END_OF_LINE) 
+			if (token.getType() == TokenType.END_OF_LINE) { 
 				throw new IllegalArgumentException("Token ';' canno't come after -!");
+			}
+			else if (token.getType() == TokenType.INTEGER) {
+				val -= Integer.parseInt(token.getValue());
+				token = lexer.get_Token();
+			}
 		}
-		if (token.getType() == TokenType.OPEN_BREAKETS) {
-			token = lexer.get_Token();
-			val += Expression();
-		}
-		else if (token.getType() == TokenType.INTEGER) {
-			val -= Integer.parseInt(token.getValue());
-			token = lexer.get_Token();
-		}
+
 		else if (token.getType() == TokenType.IDENTIFIER) {
 			val = this.arr[Integer.parseInt(token.getValue())];
 			token = lexer.get_Token();
 		}
-		else if (token.getValue().equals("(")) {
+		else if (token.getType()== TokenType.OPEN_BREAKETS || token.getType()== TokenType.CLOSE_BREAKETS) {
+			if (token.getValue().equals("(")) {
+				token = lexer.get_Token();
+				val = Expression();
+				if (token.getValue().equals(")")) {
+					token = lexer.get_Token();
+				}
+			}
 			token = lexer.get_Token();
-			val = Expression();
-		}
-		if (token.getValue().equals(")")) {
-			token = lexer.get_Token();
+
 		}
 		return val;
 	}
