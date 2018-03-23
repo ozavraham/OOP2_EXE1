@@ -15,10 +15,11 @@ public class Lexer
 		StringBuffer currentToken = new StringBuffer();
 		tokensList = new ArrayList<Token>();
 		Token token = null;
+		
 		for(int i = 0; i < source.length(); i++)
 		{
-			String sub = source.substring(i ,i+1);
-			if(sub.matches("[0-9.a-z]")) {
+			String sub = source.substring(i, i+1);
+			if(sub.matches("[0-9.a-zA-Z_]")) {
 				currentToken.append(sub);
 				continue; 
 			}
