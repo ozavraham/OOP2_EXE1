@@ -132,7 +132,7 @@ public class Parser {
 
 	public void showSavedValues() {
 		for (int i=0; i<this.arr.length ; i++) {
-			char c = (char) (i+'a');
+			char c = (char) (i +'a');
 			System.out.print(c + ": " + this.arr[i] + " | ");
 		}
 		System.out.println();
