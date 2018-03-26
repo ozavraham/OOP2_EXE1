@@ -18,8 +18,15 @@ public class Main {
 			System.out.print("Token divide:");
 			lexer.printList();
 			parser.Line(lexer);
-			parser.showSavedValues();
+			if (parser.isResult) { 
+				System.out.println("Result: " + parser.getResult());
+			}
+			else {
+				System.out.println(str + " Has been excuted!");
+				parser.showSavedValues();
+			}
 			System.out.println("To continue, Insert new command, 'END' to exit");
+			parser.setisResult();
 			str =  read.nextLine();
 		}
 		System.out.println("Goodbye...");
