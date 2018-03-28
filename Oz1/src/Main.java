@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Scanner read = new Scanner (System.in);
 		String str;
 		System.out.println("Welcome!");
