@@ -4,15 +4,16 @@ public class Lexer
 {
 	
 	List <Token> tokensList;
-	static int index;
+	public static int index;
+	private int length;
 	
 	public Lexer() {
-		this.index = 0;
+		Lexer.index = 0;
 	}
 	
 	public List <Token> tokenize(String source) throws UnknownTokenException
 {
-
+		this.length = source.length();
 		StringBuffer currentToken = new StringBuffer();
 		tokensList = new ArrayList<Token>();
 		Token token = null;
@@ -113,5 +114,11 @@ public class Lexer
 		index++;
 		return token;
 
+	}
+	
+	public boolean hasNextToken() {
+		int temp = Lexer.index + 1;
+		if (temp>this.length) return false;
+		else return true;
 	}
 }

@@ -1,17 +1,23 @@
 import java.util.LinkedList;
 import java.util.List;
 
-/*	Parser checking line intactness, calculate the score and print it, or assign into varaible
- * 	 
+/*	Parser:
+ *  arr : Holds the values from the Assignmen command
+ * 	result : Total result for calculation
+ *  isResult : if excuted calculation
  */
 public class Parser {
-	public int arr[];
-	private int result; // getter
-	boolean isResult; // if excuted calculation
+	public int arr[]; // 
+	private int result; // 
+	boolean isResult; // 
 	private Token token;
 	private Lexer lexer;
 
-
+	/*
+	 * Constructor
+	 * Allcotaing array from a -> z
+	 * Assuming this is a calculation command
+	 */
 	public Parser (){
 		this.arr = new int[26];
 		this.isResult = true;
@@ -25,7 +31,7 @@ public class Parser {
 		this.result = 0;
 		this.lexer = lexer;
 		token = lexer.get_Token();
-		while (this.token!=null) {
+		while (lexer.hasNextToken()) {
 			if (this.token.getType()==TokenType.INTEGER) {
 				this.result = Expression();
 				System.out.println(result);
@@ -39,12 +45,11 @@ public class Parser {
 					if (token.getType()==TokenType.INTEGER && lexer.tokensList.get(Lexer.index).getType()!=TokenType.OPERNAD) {
 						int a = Integer.parseInt(token.getValue());
 						this.arr[tav.charAt(0)-'a'] = a;
-						break;
+
 					}
 					else {
 						int temp = Expression();
 						this.arr[tav.charAt(0)-'a'] = temp;
-						break;
 					}
 				}
 			}
@@ -52,36 +57,38 @@ public class Parser {
 			// Need to continue!
 			else if (token.getValue().equals("(")) {
 				this.token = lexer.get_Token();
-				if (this.token.getType()==TokenType.IDENTIFIER || this.token.getType()==TokenType.INTEGER) {
+				if (this.token.getType()==TokenType.IDENTIFIER || this.token.getType()==TokenType.INTEGER || this.token.getType()==TokenType.OPERNAD) {
 					if (this.token.getType()==TokenType.IDENTIFIER) {
 						String tav = this.token.getValue();
 						System.out.println(tav);
 						this.result = this.arr[tav.charAt(0)-'a'];
 					}
-					else {
+					else if (this.token.getType()==TokenType.INTEGER){
 						this.result = Integer.parseInt(token.getValue());
 					}
-					this.token = lexer.get_Token();
-					char tav = this.token.getValue().charAt(0);
-					this.token = lexer.get_Token();
-					switch (tav) {
-					case '+': 
-						this.result += Expression();
-						break;
-					case '-': 
-						this.result -= Expression();
-						break;
-					case '*': 
-						this.result *= Expression();
-						break;
-					case '/': 
-						int val = Expression();
-						if (val==0) {
-							throw new ArithmeticException("Cannot devide by zero!");
+					else {
+						this.token = lexer.get_Token();
+						char tav = this.token.getValue().charAt(0);
+						this.token = lexer.get_Token();
+						switch (tav) {
+						case '+': 
+							this.result += Expression();
+							break;
+						case '-': 
+							this.result -= Expression();
+							break;
+						case '*': 
+							this.result *= Expression();
+							break;
+						case '/': 
+							int val = Expression();
+							if (val==0) {
+								throw new ArithmeticException("Cannot devide by zero!");
+							}
+							break;
+						default:
+							throw new IllegalArgumentException("No operand after identifier!");
 						}
-						break;
-					default:
-						throw new IllegalArgumentException("No operand after identifier!");
 					}
 				}
 			}
@@ -173,7 +180,7 @@ public class Parser {
 				val = Integer.parseInt(token.getValue());
 			}
 			else {
-				val = this.arr[token.getValue().charAt(0)];
+				val = this.arr[token.getValue().charAt(0)-'a'];
 			}
 			token = lexer.get_Token();
 		}
@@ -191,9 +198,6 @@ public class Parser {
 			if (token.getValue().equals("(")) {
 				token = lexer.get_Token();
 				val = Expression();
-				if (token.getValue().equals(")")) {
-					token = lexer.get_Token();
-				}
 			}
 			token = lexer.get_Token();
 		}
