@@ -104,6 +104,7 @@ public class Parser {
 					if (val==0) {
 						throw new ArithmeticException("Cannot devide by zero!");
 					}
+					else this.result/=val;
 					break;
 				default:
 					throw new IllegalArgumentException("No operand after identifier!");
@@ -123,7 +124,7 @@ public class Parser {
 
 	/**
 	 * 
-	 * @return
+	 * @return val 
 	 */
 	protected int Expression(){
 		int val = Term();
