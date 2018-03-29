@@ -13,8 +13,7 @@ public class Parser {
 	private Token token;
 	private Lexer lexer;
 
-	/*
-	 * Constructor
+	/* Constructor
 	 * Allcotaing array from a -> z
 	 * Assuming this is a calculation command
 	 */
@@ -23,9 +22,11 @@ public class Parser {
 		this.isResult = true;
 	}
 
-	/**
+	/* Line 
+	 * Getting as an input the lexer, diciding if its and calculation or an assign command
 	 * 
-	 * @return
+	 * @throws IllegalArgumentException if the command dose not ends after ';'
+	 * 
 	 */
 	protected void Line(Lexer lexer) {
 		this.result = 0;
@@ -40,6 +41,7 @@ public class Parser {
 				this.isResult = false;
 				String tav = this.token.getValue();
 				this.token = lexer.get_Token(); 
+				// IF its and assign command
 				if (this.token.getValue().equals("=")) {
 					this.token = lexer.get_Token(); 	
 					if (token.getType()==TokenType.INTEGER && lexer.tokensList.get(Lexer.index).getType()!=TokenType.OPERNAD) {
@@ -53,49 +55,10 @@ public class Parser {
 					}
 				}
 			}
-
-			// Need to continue!
-			else if (token.getValue().equals("(")) {
+			else if (this.token.getType()==TokenType.OPERNAD) {
+				char ch = this.token.getValue().charAt(0);
 				this.token = lexer.get_Token();
-				if (this.token.getType()==TokenType.IDENTIFIER || this.token.getType()==TokenType.INTEGER || this.token.getType()==TokenType.OPERNAD) {
-					if (this.token.getType()==TokenType.IDENTIFIER) {
-						String tav = this.token.getValue();
-						System.out.println(tav);
-						this.result = this.arr[tav.charAt(0)-'a'];
-					}
-					else if (this.token.getType()==TokenType.INTEGER){
-						this.result = Integer.parseInt(token.getValue());
-					}
-					else {
-						this.token = lexer.get_Token();
-						char tav = this.token.getValue().charAt(0);
-						this.token = lexer.get_Token();
-						switch (tav) {
-						case '+': 
-							this.result += Expression();
-							break;
-						case '-': 
-							this.result -= Expression();
-							break;
-						case '*': 
-							this.result *= Expression();
-							break;
-						case '/': 
-							int val = Expression();
-							if (val==0) {
-								throw new ArithmeticException("Cannot devide by zero!");
-							}
-							break;
-						default:
-							throw new IllegalArgumentException("No operand after identifier!");
-						}
-					}
-				}
-			}
-			else if (token.getType()==TokenType.OPERNAD) {					
-				char tav = this.token.getValue().charAt(0);
-				this.token = lexer.get_Token();
-				switch (tav) {
+				switch (ch) {
 				case '+': 
 					this.result += Expression();
 					break;
@@ -103,27 +66,29 @@ public class Parser {
 					this.result -= Expression();
 					break;
 				case '*': 
-					int value = Expression();
-					this.result *= value;
+					this.result *= Expression();
 					break;
 				case '/': 
 					int val = Expression();
 					if (val==0) {
 						throw new ArithmeticException("Cannot devide by zero!");
 					}
-					else this.result/=val;
 					break;
 				default:
 					throw new IllegalArgumentException("No operand after identifier!");
 				}
 			}
-			else if (token.getValue().equals(")")) {
+			// Need to continue! try catch block
+			else if (token.getType()==TokenType.OPEN_BREAKETS) {
 				this.token = lexer.get_Token();
 			}
 
+			else if (token.getType()==TokenType.CLOSE_BREAKETS) {
+				this.token = lexer.get_Token();
+			}
 			if (token.getValue().equals(";")) {
-				this.token = null;
-				break;
+				if (lexer.hasNextToken()) throw new IllegalArgumentException("Value is prohibeded after ';' ! ");
+				else break;	
 			}
 
 		}
@@ -169,7 +134,8 @@ public class Parser {
 		return val;
 	}
 
-	/**
+	/* Buttom line recursion
+	 * if Integer - returns the integer
 	 * 
 	 * @return
 	 */
@@ -195,7 +161,7 @@ public class Parser {
 			}
 		}
 		else if (token.getType()== TokenType.OPEN_BREAKETS || token.getType()== TokenType.CLOSE_BREAKETS) {
-			if (token.getValue().equals("(")) {
+			if (token.getType()==TokenType.OPEN_BREAKETS) {
 				token = lexer.get_Token();
 				val = Expression();
 			}
