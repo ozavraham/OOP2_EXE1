@@ -46,8 +46,10 @@ public class Parser {
 					}
 				}
 				// Else it is a calculation command
-				else this.result = this.arr[tav.charAt(0)-'a'];
-				this.isResult = true;
+				else {
+					this.result = this.arr[tav.charAt(0)-'a'];
+					this.isResult = true;
+				}
 			}
 			else if (this.token.getType()==TokenType.OPERNAD) {
 				char ch = this.token.getValue().charAt(0);

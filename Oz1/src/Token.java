@@ -4,14 +4,12 @@ public class Token
 	private String value;
 	private TokenType type;
 	
-	public Token (TokenType type)
-	{
+	public Token (TokenType type) {
 		this.value = null;
 		this.type = type;
 	}
 	
-	public Token (String value, TokenType type)
-	{   
+	public Token (String value, TokenType type) {   
 		this.value = value;
 		this.type = type;
 	}
@@ -20,22 +18,19 @@ public class Token
 		this.value = val;
 	}
 	
-	public int getIndex() 
-	{
+	public int getIndex() {
 		return this.tokenIndex;
 	}
-	public String getValue()
-	{
+	public String getValue() {
 		return this.value;
 	}
 	
-	public TokenType getType() 
-	{
+	public TokenType getType() {
 		return this.type;
 	}
 	
-	public String toString() 
-	{
+	public String toString() {
 		return this.value + " " + this.type;
 	}
+	
 }

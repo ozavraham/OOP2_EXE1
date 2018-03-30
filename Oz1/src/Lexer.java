@@ -10,7 +10,6 @@ public class Lexer {
 	}
 
 	public List <Token> tokenize(String source) throws UnknownTokenException {
-		this.length = source.length();
 		StringBuffer currentToken = new StringBuffer();
 		tokensList = new ArrayList<Token>();
 		Token token = null;
@@ -100,7 +99,7 @@ public class Lexer {
 
 	public boolean hasNextToken() {
 		int temp = Lexer.index + 1;
-		if (temp>this.length) return false;
+		if (temp>this.tokensList.size()) return false;
 		else return true;
 	}
 
