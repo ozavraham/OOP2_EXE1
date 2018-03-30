@@ -1,6 +1,3 @@
-import java.util.LinkedList;
-import java.util.List;
-
 /*	Parser:
  *  arr : Holds the values from the Assignmen command
  * 	result : Total result for calculation
@@ -33,27 +30,30 @@ public class Parser {
 		this.lexer = lexer;
 		token = lexer.get_Token();
 		while (lexer.hasNextToken()) {
+			// If its an Integer at the beginning, then its calculation
 			if (this.token.getType()==TokenType.INTEGER) {
 				this.result = Expression();
-				System.out.println(result);
 			}
+			// Else its possibly an Assign command 
 			else if (this.token.getType()==TokenType.IDENTIFIER) {
 				this.isResult = false;
 				String tav = this.token.getValue();
 				this.token = lexer.get_Token(); 
-				// IF its and assign command
+				// If its an assign command then 
 				if (this.token.getValue().equals("=")) {
 					this.token = lexer.get_Token(); 	
 					if (token.getType()==TokenType.INTEGER && lexer.tokensList.get(Lexer.index).getType()!=TokenType.OPERNAD) {
 						int a = Integer.parseInt(token.getValue());
 						this.arr[tav.charAt(0)-'a'] = a;
-
 					}
 					else {
 						int temp = Expression();
 						this.arr[tav.charAt(0)-'a'] = temp;
 					}
 				}
+				// Else it is a calculation command
+				else this.result = this.arr[tav.charAt(0)-'a'];
+				this.isResult = true;
 			}
 			else if (this.token.getType()==TokenType.OPERNAD) {
 				char ch = this.token.getValue().charAt(0);
@@ -171,8 +171,6 @@ public class Parser {
 		}
 		return val;
 	}
-	
-	
 	
 	/* showSavedValues Used for testing
 	 * Print all of the values that located at the "memory"

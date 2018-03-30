@@ -15,6 +15,7 @@ public class Main {
 			List<Token> list = new LinkedList(); // If needed
 			System.out.println("Your input: " + str); // Priniting the user's input
 			list = lexer.tokenize(str);
+			System.out.println("----" + str.length());
 			System.out.print("Token divide:");
 			lexer.printList();
 			parser.Line(lexer);

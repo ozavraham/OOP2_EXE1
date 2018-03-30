@@ -102,7 +102,8 @@ public class Lexer
 		System.out.print("[");
 		for(int i = 0; i < tokensList.size(); i++)
 		{
-			System.out.print(tokensList.get(i) + " | ");
+			if (i==tokensList.size()-1) System.out.print(tokensList.get(i));
+			else System.out.print(tokensList.get(i) + " | ");
 		}
 		System.out.println("]");
 	}
