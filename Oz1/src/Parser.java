@@ -1,13 +1,8 @@
-/*	Parser:
- *  arr : Holds the values from the Assignmen command
- * 	result : Total result for calculation
- *  isResult : if excuted calculation
- */
 public class Parser {
-	public int arr[]; // 
-	private int result; // 
-	boolean isResult; // 
-	private Token token;
+	public int arr[]; // Allcoating to save into identifires
+	private int result; // To calculate the total result
+	boolean isResult; // True - if it is a calculation command 
+	private Token token; 
 	private Lexer lexer;
 
 	/* Constructor
@@ -20,8 +15,7 @@ public class Parser {
 	}
 
 	/* Line 
-	 * Getting as an input the lexer, diciding if its and calculation or an assign command
-	 * 
+	 * Getting as an input the lexer, diciding if its an calculation or an assign command
 	 * @throws IllegalArgumentException if the command dose not ends after ';'
 	 * 
 	 */
