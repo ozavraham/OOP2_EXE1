@@ -62,23 +62,26 @@ public class Parser {
 				case '+': 
 					this.result += Expression();
 					break;
+					
 				case '-': 
 					this.result -= Expression();
 					break;
+					
 				case '*': 
 					this.result *= Expression();
 					break;
+					
 				case '/': 
 					int val = Expression();
 					if (val==0) {
 						throw new ArithmeticException("Cannot devide by zero!");
 					}
 					break;
+					
 				default:
 					throw new IllegalArgumentException("No operand after identifier!");
 				}
 			}
-			// Need to continue! try catch block
 			else if (token.getType()==TokenType.OPEN_BREAKETS) {
 				this.token = lexer.get_Token();
 			}
@@ -87,21 +90,19 @@ public class Parser {
 				this.token = lexer.get_Token();
 			}
 			if (token.getValue().equals(";")) {
-				if (lexer.hasNextToken()) throw new IllegalArgumentException("Value is prohibeded after ';' ! ");
+				if (lexer.hasNextToken()) throw new IllegalArgumentException("Value is prohibited after ';' ! ");
 				else break;	
 			}
 
 		}
 	}
 
-	/**
-	 * 
-	 * @return val 
+	/* Expression starts a recursive calculation
+	 * Addition and Subtraction actions begin here
+	 * @return val (int) 
 	 */
 	protected int Expression(){
 		int val = Term();
-		//		token = lexer.get_Token();
-		System.out.println(token.getValue());
 		if (token.getValue().equals("+") || token.getValue().equals("-")) {
 			if (token.getValue().equals("+")) {
 				token = lexer.get_Token();
@@ -115,9 +116,9 @@ public class Parser {
 		return val;
 	}
 
-	/**
-	 * 
-	 * @return
+	/* Term continue the recursive calculation
+	 * Multiplication and Division actions if needed
+	 * @return val (int)
 	 */
 	protected int Term() {
 		int val = Factor();
@@ -135,9 +136,10 @@ public class Parser {
 	}
 
 	/* Buttom line recursion
-	 * if Integer - returns the integer
-	 * 
-	 * @return
+	 * if INTEGER - returns the INTEGER
+	 * if IDENTIFIER - returns the value inside the IDENTIFIER
+	 * @return val(int)
+	 * @throws IllegalArgumentException when finding ';' after '-'
 	 */
 	protected int Factor() {
 		int val = 0;
@@ -169,7 +171,12 @@ public class Parser {
 		}
 		return val;
 	}
-
+	
+	
+	
+	/* showSavedValues Used for testing
+	 * Print all of the values that located at the "memory"
+	 */
 	public void showSavedValues() {
 		for (int i=0; i<this.arr.length ; i++) {
 			char c = (char)(i +'a');
@@ -177,11 +184,17 @@ public class Parser {
 		}
 		System.out.println();
 	}
-
+	
+	/* getResult()
+	 * @return The result of this parser
+	 */
 	public int getResult() {
 		return this.result;
 	}
-
+	
+	/* setisResult()
+	 * If it is calculation, setting the value to true
+	 */
 	public void setisResult() {
 		this.isResult = true;
 	}
