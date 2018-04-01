@@ -97,7 +97,7 @@ public class Parser {
 	 * Addition and Subtraction actions begin here
 	 * @return val (int) 
 	 */
-	protected int Expression(){
+	protected int Expression() {
 		int val = Term();
 		if (token.getValue().equals("+") || token.getValue().equals("-")) {
 			if (token.getValue().equals("+")) {

@@ -23,7 +23,7 @@ public class Main {
 			System.out.println("Your input: " + str); 
 			// Sending the string to tokenize, and assign to list
 			list = lexer.tokenize(str); 
-			//Sending the token list to  chech if valid
+			//Sending the token list to  check if valid
 			lexer.isValid(list);
 			// Presenting the Token Dividion
 			System.out.print("Token divide:");
