@@ -14,6 +14,7 @@ public class Main {
 		Parser parser = new Parser();
 		str =  read.nextLine();
 		// As long as we ain't getting END as an input
+		try {
 		while (!str.equals("END")) {
 			Lexer lexer = new Lexer();
 			// If needed
@@ -22,8 +23,10 @@ public class Main {
 			System.out.println("Your input: " + str); 
 			// Sending the string to tokenize, and assign to list
 			list = lexer.tokenize(str); 
-			System.out.print("Token divide:");
+			//Sending the token list to  chech if valid
+			lexer.isValid(list);
 			// Presenting the Token Dividion
+			System.out.print("Token divide:");
 			lexer.printList(); 
 			// Sending the lexer to Line @ Parser class
 			parser.Line(lexer); 
@@ -39,6 +42,13 @@ public class Main {
 			System.out.println("To continue, Insert new command, 'END' to exit");
 			parser.setisResult();
 			str =  read.nextLine();
+		}
+	}
+		catch(IllegalTokenException e) {
+			System.out.println(e);
+		}
+		catch(UnknownTokenException e) {
+			System.out.println(e);
 		}
 		// Closing the scanner
 		read.close(); 

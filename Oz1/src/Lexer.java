@@ -102,19 +102,19 @@ public class Lexer {
 		if (temp>this.tokensList.size()) return false;
 		else return true;
 	}
-	public static void isValid(List tokens) throws IllegalTokenException
+	public static void isValid(List<Token> tokens) throws IllegalTokenException
 	{
+		
+		String[] listArr = new String[tokens.size()];
+		listArr = tokens.toArray(listArr);
 		int countSemicolon = 0;
 		int countEqual = 0;
-		String[] listArr = new String[tokens.size()];
-		tokens.toArray(listArr);
-		TokenType type = null;
 		
-		if(listArr[0].equals(type.OPERNAD))
+		if(listArr[0].equals(TokenType.OPERNAD))
 			throw new IllegalTokenException("A line can't start with a " + listArr[0]);
 		
 		for(int i = 0; i < listArr.length; i++) {
-		if(listArr[i].equals(type.END_OF_LINE)) {
+		if(listArr[i].equals(TokenType.END_OF_LINE)) {
 			countSemicolon++;
 			if(countSemicolon > 1 || (i == listArr.length-1 && 1 < countSemicolon))
 				throw new IllegalTokenException("Each line need to contain a single ';' ");
