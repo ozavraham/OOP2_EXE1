@@ -33,7 +33,7 @@ public class Main {
 			else {
 				System.out.println(str + " Has been excuted!");
 				// If need to show values at the array
-				//parser.showSavedValues();
+//				parser.showSavedValues();
 			}
 			// Getting new input from the user
 			System.out.println("To continue, Insert new command, 'END' to exit");

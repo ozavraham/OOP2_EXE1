@@ -1,9 +1,18 @@
+/*
+ * This class holds String and TokenType to represent a Token
+ */
+
 public class Token 
 	{
 	private int tokenIndex;
 	private String value;
 	private TokenType type;
 	
+	/*
+	 * Initialize a token
+	 * value - The Value of the token
+	 * type - The Type of the token (enum TokenType)  
+	 */
 	public Token (TokenType type) {
 		this.value = null;
 		this.type = type;
