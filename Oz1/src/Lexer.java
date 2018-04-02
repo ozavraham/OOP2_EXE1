@@ -11,7 +11,7 @@ public class Lexer {
 
 	public List <Token> tokenize(String source) throws UnknownTokenException {
 		StringBuffer currentToken = new StringBuffer();
-		tokensList = new ArrayList<Token>();
+		tokensList = new LinkedList<Token>();
 		Token token = null;
 		for(int i = 0; i < source.length(); i++) {
 			String sub = source.substring(i, i+1);
@@ -90,7 +90,6 @@ public class Lexer {
 		}
 		System.out.println("]");
 	}
-
 	Token get_Token() {
 		Token token = this.tokensList.get(index);
 		index++;
@@ -98,37 +97,37 @@ public class Lexer {
 	}
 
 	public boolean hasNextToken() {
-		int temp = Lexer.index + 1;
-		if (temp>this.tokensList.size()) return false;
-		else return true;
+	int temp = Lexer.index + 1;
+	if (temp>this.tokensList.size()) return false;
+	else return true;  
 	}
 	
-	public static void isValid(List<Token> tokens) throws IllegalTokenException
+	void isValid(List <Token> tokens) throws IllegalTokenException
 	{
-		int countSemicolon = 0;
-		int countEqual = 0;
-		int length = 0;
-		try {
-			while(length < tokens.size()){
-				if(tokens.get(index).getType().equals(TokenType.END_OF_LINE)) {
+			int countEqual = 0;
+			int countSemicolon = 0;
+			
+			for(int i = 0; i < tokens.size(); i++) {
+					
+				if(tokens.get(i).getType().equals(TokenType.END_OF_LINE)){
 					countSemicolon++;
-					if(countSemicolon > 1 || (length == tokens.size()-1  && 1 == countSemicolon))
-						throw new IllegalTokenException("Each line need to contain a single Semicolon at the end ");
-				}
-				if(tokens.get(index).getType().equals('=')) {
-					countEqual++;
-					if(countEqual > 1)
-						throw new IllegalTokenException("Each line can contain a single Equal sign ");
-				}
-				length++;
+						if(countSemicolon > 1 ) {
+							throw new IllegalTokenException("Each line need to contain a single Semicolon at the end ");
+						}
+						else if((i == tokens.size()-1  && 1 < countSemicolon)) {
+							throw new IllegalTokenException("Each line need to contain a single Semicolon at the end ");
+						}
+					}
+					if(tokens.get(i).getValue().equals('=')) {
+						countEqual++;
+						if(countEqual > 1) {
+							throw new IllegalTokenException("Each line can contain a single Equal sign ");
+						}
+					}
 			}
-			if(tokens.get(0).getType().equals(TokenType.OPERNAD))
-				throw new IllegalTokenException("A line can't start with: " + tokens.get(0).getValue());
-		}
-		catch(IllegalTokenException e) {
-			System.out.println(e);
-		}
-
+				
+				if(tokens.get(0).getType().equals(TokenType.OPERNAD)) {
+					throw new IllegalTokenException("A line can't start with: " + tokens.get(0).getValue());
+				}
 	}
-
 }

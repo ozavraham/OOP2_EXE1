@@ -18,7 +18,7 @@ public class Main {
 		while (!str.equals("END")) {
 			Lexer lexer = new Lexer();
 			// If needed
-			List <Token> list = new LinkedList(); 
+			List <Token> list = new LinkedList<Token>(); 
 			// Priniting the user's input
 			System.out.println("Your input: " + str); 
 			// Sending the string to tokenize, and assign to list
