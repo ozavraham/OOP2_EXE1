@@ -1,8 +1,8 @@
 
 public class IllegalTokenException extends Exception {
 
-	public IllegalTokenException(String message)
+	public boolean IllegalTokenException(String message)
 	{
-		super(message);
+		return false;
 	}
 }

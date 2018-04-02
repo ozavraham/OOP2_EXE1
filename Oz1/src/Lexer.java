@@ -97,37 +97,38 @@ public class Lexer {
 	}
 
 	public boolean hasNextToken() {
-	int temp = Lexer.index + 1;
-	if (temp>this.tokensList.size()) return false;
-	else return true;  
+		int temp = Lexer.index + 1;
+		if (temp>this.tokensList.size()) return false;
+		else return true;  
 	}
-	
-	void isValid(List <Token> tokens) throws IllegalTokenException
-	{
-			int countEqual = 0;
-			int countSemicolon = 0;
-			
-			for(int i = 0; i < tokens.size(); i++) {
-					
-				if(tokens.get(i).getType().equals(TokenType.END_OF_LINE)){
-					countSemicolon++;
-						if(countSemicolon > 1 ) {
-							throw new IllegalTokenException("Each line need to contain a single Semicolon at the end ");
-						}
-						else if((i == tokens.size()-1  && 1 < countSemicolon)) {
-							throw new IllegalTokenException("Each line need to contain a single Semicolon at the end ");
-						}
-					}
-					if(tokens.get(i).getValue().equals('=')) {
-						countEqual++;
-						if(countEqual > 1) {
-							throw new IllegalTokenException("Each line can contain a single Equal sign ");
-						}
-					}
-			}
-				
-				if(tokens.get(0).getType().equals(TokenType.OPERNAD)) {
-					throw new IllegalTokenException("A line can't start with: " + tokens.get(0).getValue());
+
+	public void isValid(List <Token> list) throws IllegalArgumentException{
+		int length = list.size();
+		int countSemiColon = 0;
+		int countEqual = 0;
+
+		if (list.get(0).getValue().equals(";") || list.get(0).getType()==TokenType.OPERNAD) {
+			System.out.println("Invalid begeining of command!");
+			throw new IllegalArgumentException("Invalid beginning of a command!");
+		}
+
+		if (!list.get(length-1).getValue().equals(";")) {
+			throw new IllegalArgumentException("; Must be at the end of command!");
+		}
+		for(int i = 0; i <list.size(); i++) {
+			if(list.get(i).getType().equals(TokenType.END_OF_LINE)){
+				countSemiColon++;
+				if(countSemiColon > 1 ) {
+					throw new IllegalArgumentException("Each line need to contain a single Semicolon at the end!");
 				}
+			}
+			else if(list.get(i).getValue().equals("=")) {
+				countEqual++;
+				if(countEqual > 1) {
+					throw new IllegalArgumentException("Each line can contain a single Equal sign!");
+				}
+			}
+		}
+
 	}
 }
