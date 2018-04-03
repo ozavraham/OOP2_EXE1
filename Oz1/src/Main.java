@@ -2,9 +2,15 @@ import java.util.*;
 
 public class Main {
 
+	/* Parser and Lexer implications
+	 * Aviram Boniel & Oz Avraham
+	 * Object Oriented Programming 2 - Exercise 1 
+	 */
+	
 	public static void main(String[] args) throws Exception {
 
 		boolean isDone = false;
+		// Initialize new Parser
 		Parser parser = new Parser();
 		System.out.println("Welcome!");
 		System.out.println("Insert command to execute:");
@@ -12,12 +18,12 @@ public class Main {
 		Scanner read = new Scanner (System.in);
 		do {
 			// Instructions
-			// Initialize new Parser
 			try{
 				String str =  read.nextLine();
 				if (str.equals("END")) isDone = true;
+				// As long as we ain't getting END as an input
 				else {
-					// As long as we ain't getting END as an input
+					// Initialize new Lexer
 					Lexer lexer = new Lexer();
 					// If needed
 					List <Token> list = new LinkedList<Token>(); 
@@ -55,7 +61,6 @@ public class Main {
 		read.close(); 
 		System.out.println("Exiting... Goodbye!");
 	}
-
 }
 
 
