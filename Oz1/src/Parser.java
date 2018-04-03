@@ -51,9 +51,11 @@ public class Parser {
 					this.isResult = true;
 				}
 			}
+			// If its an opernad, then we need some calculation
 			else if (this.token.getType()==TokenType.OPERNAD) {
 				char ch = this.token.getValue().charAt(0);
 				this.token = lexer.get_Token();
+				// Excuting the calculation according to the matching operand
 				switch (ch) {
 				case '+': 
 					this.result += Expression();
@@ -72,6 +74,7 @@ public class Parser {
 					if (val==0) {
 						throw new ArithmeticException("Cannot devide by zero!");
 					}
+					this.result /= val;
 					break;
 					
 				default:
