@@ -29,7 +29,7 @@ public class Main {
 					List <Token> list = new LinkedList<Token>(); 
 					// Priniting the user's input
 					System.out.println("Your input: " + str); 
-					// Sending the string to tokenize, and assign to list
+					// Sending the string to tokenize @ Lexer class, and assign to list
 					list = lexer.tokenize(str); 
 					//Sending the token list to  check if valid, throws Execeptions 
 					lexer.isValid(list);
@@ -43,8 +43,6 @@ public class Main {
 					}
 					else {
 						System.out.println(str + " Has been excuted!");
-						// If need to show values at the array
-						parser.showSavedValues();
 					}
 					// Getting new input from the user
 					System.out.println("To continue, Insert new command, 'END' to exit");
