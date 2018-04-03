@@ -3,12 +3,16 @@ import java.util.*;
 public class Lexer {
 	List <Token> tokensList;
 	public static int index;
-	private int length;
 
 	public Lexer() {
 		Lexer.index = 0;
 	}
-
+	/*
+	 * tokenize receive  a String 
+	 * disjoint String to Token List
+	 * each Token by his type
+	 * Return Token LinkedList
+	 */
 	public List <Token> tokenize(String source) throws UnknownTokenException {
 		StringBuffer currentToken = new StringBuffer();
 		tokensList = new LinkedList<Token>();
@@ -81,7 +85,11 @@ public class Lexer {
 		}
 		return tokensList;
 	}
-
+	/*Prints Token list 
+	 * [token value token type | token value token type]
+	 * for -> b; -> prints:
+	 * [b IDENTIFIER | ; END_OF_LINE]
+	 */
 	public void printList() {
 		System.out.print("[");
 		for(int i = 0; i < tokensList.size(); i++) {
@@ -95,16 +103,20 @@ public class Lexer {
 		index++;
 		return token;
 	}
-
+	/*prevent index out of bound exception */
 	public boolean hasNextToken() {
 		int temp = Lexer.index + 1;
 		if (temp>this.tokensList.size()) return false;
 		else return true;  
 	}
-
+	/*isValid checks that the Tokens list generated is valid
+	 *OPERAND and Semicolon in start of line are not allowed
+	 *each line need to end with semicolon and only one in line
+	 *double equal sign is not allowed
+	 */
 	public void isValid(List <Token> list) throws IllegalArgumentException{
 		int length = list.size();
-		int countSemiColon = 0;
+		int countSemicolon = 0;
 		int countEqual = 0;
 		if (list.get(0).getValue().equals(";") || list.get(0).getType()==TokenType.OPERNAD) {
 			throw new IllegalArgumentException("Invalid beginning of command!");
@@ -115,8 +127,8 @@ public class Lexer {
 		}
 		for(int i = 0; i <list.size(); i++) {
 			if(list.get(i).getType().equals(TokenType.END_OF_LINE)){
-				countSemiColon++;
-				if(countSemiColon > 1 ) {
+				countSemicolon++;
+				if(countSemicolon > 1 ) {
 					throw new IllegalArgumentException("Each line need to contain a single Semicolon at the end!");
 				}
 			}
