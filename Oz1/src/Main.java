@@ -5,14 +5,15 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 
 		boolean isDone = false;
+		Parser parser = new Parser();
 		System.out.println("Welcome!");
 		System.out.println("Insert command to execute:");
 		System.out.println("Insert 'END' to exit.");
-		try (Scanner read = new Scanner (System.in)){
-			do {
-				// Instructions
-				// Initialize new Parser
-				Parser parser = new Parser();
+		Scanner read = new Scanner (System.in);
+		do {
+			// Instructions
+			// Initialize new Parser
+			try{
 				String str =  read.nextLine();
 				if (str.equals("END")) isDone = true;
 				else {
@@ -24,7 +25,7 @@ public class Main {
 					System.out.println("Your input: " + str); 
 					// Sending the string to tokenize, and assign to list
 					list = lexer.tokenize(str); 
-					//Sending the token list to  check if valid
+					//Sending the token list to  check if valid, throws Execeptions 
 					lexer.isValid(list);
 					// Presenting the Token Dividion
 					System.out.print("Token divide:");
@@ -42,18 +43,20 @@ public class Main {
 					// Getting new input from the user
 					System.out.println("To continue, Insert new command, 'END' to exit");
 					parser.setisResult();
-					str =  read.nextLine();
 				}
-			} while (!isDone);
-
-			// Closing the scanner
-			read.close(); 
-			System.out.println("Exiting... Goodbye!");
-		}
-		catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+			}
+			// Catch exceptions from Lexer 
+			catch (Exception e) {
+				System.out.println(e.getMessage());
+				System.out.println("Insert new command, 'END' to exit");
+			}
+		}while (!isDone);
+		// Closing the scanner
+		read.close(); 
+		System.out.println("Exiting... Goodbye!");
 	}
+
 }
+
 
 

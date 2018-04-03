@@ -106,10 +106,8 @@ public class Lexer {
 		int length = list.size();
 		int countSemiColon = 0;
 		int countEqual = 0;
-
 		if (list.get(0).getValue().equals(";") || list.get(0).getType()==TokenType.OPERNAD) {
-			System.out.println("Invalid begeining of command!");
-			throw new IllegalArgumentException("Invalid beginning of a command!");
+			throw new IllegalArgumentException("Invalid beginning of command!");
 		}
 
 		if (!list.get(length-1).getValue().equals(";")) {
