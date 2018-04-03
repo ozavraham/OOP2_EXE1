@@ -178,6 +178,7 @@ public class Parser {
 	
 	/* showSavedValues Used for testing
 	 * Print all of the values that located at the "memory"
+	 * Used for test only * 
 	 */
 	public void showSavedValues() {
 		for (int i=0; i<this.arr.length ; i++) {
