@@ -40,6 +40,7 @@ public class Parser {
 						int a = Integer.parseInt(token.getValue());
 						this.arr[tav.charAt(0)-'a'] = a;
 					}
+					// Handle a=) situation 
 					else if (token.getType()==TokenType.CLOSE_BREAKETS) {
 						throw new IllegalArgumentException ("Close Bracket cannot be after '=' !");
 					}
