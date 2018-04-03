@@ -40,6 +40,9 @@ public class Parser {
 						int a = Integer.parseInt(token.getValue());
 						this.arr[tav.charAt(0)-'a'] = a;
 					}
+					else if (token.getType()==TokenType.CLOSE_BREAKETS) {
+						throw new IllegalArgumentException ("Close Bracket cannot be after '=' !");
+					}
 					else {
 						int temp = Expression();
 						this.arr[tav.charAt(0)-'a'] = temp;
