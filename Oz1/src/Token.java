@@ -17,11 +17,11 @@ public class Token
 		setValue(value);
 		setType(type);
 	}
-	public void setType(TokenType type) {
+	private void setType(TokenType type) {
 		this.type = type;
 	}
 	
-	public void setValue(String val) {
+	private void setValue(String val) {
 		this.value = val;
 	}
 	
