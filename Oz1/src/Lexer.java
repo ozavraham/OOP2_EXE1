@@ -39,24 +39,19 @@ public class Lexer {
 			char chr = source.charAt(i);
 			switch (chr) {
 			case '+':
-				token = new Token(TokenType.OPERNAD);
-				token.setValue(Character.toString(chr));
+				token = new Token("+",TokenType.OPERNAD);
 				break;
 			case '-':
-				token = new Token(TokenType.OPERNAD);
-				token.setValue(Character.toString(chr));
+				token = new Token("-",TokenType.OPERNAD);
 				break;
 			case '*':
-				token = new Token(TokenType.OPERNAD);
-				token.setValue(Character.toString(chr));
+				token = new Token("*",TokenType.OPERNAD);
 				break;
 			case '/':
-				token = new Token(TokenType.OPERNAD);
-				token.setValue(Character.toString(chr));
+				token = new Token("/",TokenType.OPERNAD);
 				break;
 			case '=':
-				token = new Token(TokenType.OPERNAD);
-				token.setValue(Character.toString(chr));
+				token = new Token("=",TokenType.OPERNAD);
 				break;
 			case '(':
 				if (token != null && token.getType() == TokenType.IDENTIFIER) {
@@ -64,17 +59,14 @@ public class Lexer {
 					token = new Token(token.getValue(), TokenType.FUNCTION);
 				} 
 				else {
-					token = new Token(TokenType.OPEN_BREAKETS);
-					token.setValue(Character.toString(chr));
+					token = new Token("(",TokenType.OPEN_BREAKETS);
 				}
 				break;
 			case ')':
-				token = new Token(TokenType.CLOSE_BREAKETS);
-				token.setValue(Character.toString(chr));
+				token = new Token(")",TokenType.CLOSE_BREAKETS);
 				break;
 			case ';':
-				token = new Token(TokenType.END_OF_LINE);
-				token.setValue(Character.toString(chr));
+				token = new Token(";",TokenType.END_OF_LINE);
 				break;
 			case ' ':
 				continue;

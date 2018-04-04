@@ -13,13 +13,11 @@ public class Token
 	 * value - The Value of the token
 	 * type - The Type of the token (enum TokenType)  
 	 */
-	public Token (TokenType type) {
-		this.value = null;
-		this.type = type;
-	}
-	
 	public Token (String value, TokenType type) {   
-		this.value = value;
+		setValue(value);
+		setType(type);
+	}
+	public void setType(TokenType type) {
 		this.type = type;
 	}
 	
