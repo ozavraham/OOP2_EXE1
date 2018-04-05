@@ -102,7 +102,7 @@ public class Parser {
 	}
 
 	/* Expression starts a recursive calculation
-	 * Addition and Subtraction actions begin here
+	 * Addition and Subtraction actions begin excute here
 	 * @return val (int) 
 	 */
 	protected int Expression() {
@@ -121,7 +121,7 @@ public class Parser {
 	}
 
 	/* Term continue the recursive calculation
-	 * Multiplication and Division actions if needed
+	 * Multiplication and Division actions excute here if needed
 	 * @return val (int)
 	 */
 	protected int Term() {

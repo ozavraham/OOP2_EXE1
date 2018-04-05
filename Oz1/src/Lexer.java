@@ -29,7 +29,7 @@ public class Lexer {
 					tokensList.add(new Token(lexeme, TokenType.INTEGER));
 				} 
 				else if (lexeme.matches("[A-Za-z_]+[0-9]*")) {
-					tokensList.add(new Token(lexeme, TokenType.IDENTIFIER));
+					tokensList.add(new Token(lexeme.toLowerCase(), TokenType.IDENTIFIER));
 				}
 				else {
 					throw new UnknownTokenException(lexeme + " is not a valid variable name, nor a number.");
