@@ -24,11 +24,11 @@ Other files attached: Readme.txt
 
 // Definitions // 
 * TokenType: TokenType is variable of type enum, in this way we can define for each token what his type, such as:
-			INTEGER: Any number between -2147483648 and 2147483647.
-			OPERAND: Any operator of the following: ‘=‘ , ‘+’ , ‘-‘ , ‘ *’, ‘/‘ .
-			OPEN/CLOSE BRACKET: Represent ‘(‘ or ‘)’ .
-			IDENTIFIER: any character between ‘a’ to ‘z’.
-			END_OF_LINE: Represent ‘;’ .			
+	INTEGER: Any number between -2147483648 and 2147483647.
+	OPERAND: Any operator of the following: ‘=‘ , ‘+’ , ‘-‘ , ‘ *’, ‘/‘ .
+	OPEN/CLOSE BRACKET: Represent ‘(‘ or ‘)’ .
+	IDENTIFIER: any character between ‘a’ to ‘z’.
+	END_OF_LINE: Represent ‘;’ .			
 * Token: Certain charecter from given String, contains value and type, as type is one of the TokenTypes, and value is the char himself.
 * Lexer: Converting the given string into list of tokens, define the correct Type for each one and validates the command structure.
 * Parser: With the given lever list, using Recursive descent parsing to figure out the command and execute as the user desire.
