@@ -14,8 +14,8 @@ all this by using the Lexer and Parser method’s, for example:
 * Display operation: ‘a;’ will print out the value inside variable ‘a’.
 
 // Goal //
-Use our new knowledge in Java programming and implement a basic compiler    
-with a lexer and parser that are designed by the language rules and uses the method      
+Use our new knowledge in Java programming and implement a basic compiler    
+with a lexer and parser that are designed by the language rules and uses the method      
 of recursive descent.
 
 // Classes //
@@ -36,13 +36,12 @@ Other files attached: Readme.txt
 
 // Running the program //
 1. Navigate to Start -> run
-2. Set the path to your JDK bin directory, for example: "set path=C:\Program Files\Java\jdk1.8.0_161\bin".
-3. Extract the zip file to your desktop.
-4. At the run window, Type "cd desktop"
-  4.1 Type "cd oz1"
-  4.2. Type "cd src"
-  4.3. Type "javac Main.java" (Wait for the compiler to finish compiling...)
-5. Type "java Main" and follow the instuctions.
+2. Enter cmd in the commend lime
+3. Set the path to your JDK bin directory, for example: set path= "C:\Program Files\Java\jdk1.8.0_161\bin".
+4. Extract the zip file to your desktop.
+5. At the run window enter the project source folder likewise: "cd JavaEclipseWorkspace/Oz1
+6. Type "javac Main.java" (Wait for the compiler to finish compiling...)
+7. Type "java Main" and follow the instuctions and enjoy your calculations.
 
 // Algorithms // 
 Recursive Descent Parsing, Wikipedia https://en.wikipedia.org/wiki/Recursive_descent_parser
