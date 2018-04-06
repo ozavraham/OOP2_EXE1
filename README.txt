@@ -36,7 +36,7 @@ Other files attached: Readme.txt
 
 // Running the program //
 1. Navigate to Start -> run
-2. Enter cmd in the commend lime
+2. Enter cmd in the commend liמe
 3. Set the path to your JDK bin directory, for example: set path= "C:\Program Files\Java\jdk1.8.0_161\bin".
 4. Extract the zip file to your desktop.
 5. At the run window enter the project source folder likewise: "cd JavaEclipseWorkspace/Oz1
