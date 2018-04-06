@@ -17,6 +17,9 @@ public class Lexer {
 		StringBuffer currentToken = new StringBuffer();
 		tokensList = new LinkedList<Token>();
 		Token token = null;
+		
+		if (source.length() == 1) throw new IllegalArgumentException("Command must be at least 2 charecthers! (For example: 'a;')");
+		else {
 		for(int i = 0; i < source.length(); i++) {
 			String sub = source.substring(i, i+1);
 			if(sub.matches("[0-9.a-zA-Z_]")) {
@@ -75,6 +78,7 @@ public class Lexer {
 			}
 			tokensList.add(token);
 		}
+		}
 		return tokensList;
 	}
 	/*Prints Token list 
@@ -110,7 +114,6 @@ public class Lexer {
 		int length = list.size();
 		int countSemicolon = 0;
 		int countEqual = 0;
-		if (length==1) throw new IllegalArgumentException("Command must be at least 2 charecthers! (For example: 'a;')");
 		if (list.get(0).getValue().equals(";") || list.get(0).getType()==TokenType.OPERNAD) {
 			throw new IllegalArgumentException("Invalid beginning of command!");
 		}
