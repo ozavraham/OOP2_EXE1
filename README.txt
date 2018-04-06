@@ -35,7 +35,14 @@ Other files attached: Readme.txt
 * UnknownTokenException: If the token is unrecognize, throw this exception.
 
 // Running the program //
-Navigate to Start menu -> 
+1. Navigate to Start -> run
+2. Set the path to your JDK bin directory, for example: "set path=C:\Program Files\Java\jdk1.8.0_161\bin".
+3. Extract the zip file to your desktop.
+4. At the run window, Type "cd desktop"
+  4.1 Type "cd oz1"
+  4.2. Type "cd src"
+  4.3. Type "javac Main.java" (Wait for the compiler to finish compiling...)
+5. Type "java Main" and follow the instuctions.
 
 // Algorithms // 
 Recursive Descent Parsing, Wikipedia https://en.wikipedia.org/wiki/Recursive_descent_parser
